@@ -10,7 +10,12 @@ const starContainerStyle = {
   display: "flex",
 };
 
-function StarRating({ maxRating = 5, color = "#fcc419", size = 48 }) {
+function StarRating({
+  maxRating = 5,
+  color = "#fcc419",
+  size = 48,
+  messages = [],
+}) {
   const [rating, setRating] = useState(0);
   const [tempRating, setTempRating] = useState(0);
 
@@ -39,7 +44,11 @@ function StarRating({ maxRating = 5, color = "#fcc419", size = 48 }) {
           />
         ))}
       </div>
-      <p style={textStyle}>{tempRating || rating || ""}</p>
+      <p style={textStyle}>
+        {messages.length === maxRating
+          ? messages[tempRating ? tempRating - 1 : rating - 1]
+          : tempRating || rating || ""}
+      </p>
     </div>
   );
 }
@@ -52,8 +61,7 @@ function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
     height: `${size}px`,
     display: "block",
     cursor: "pointer",
-    color
-
+    color,
   };
   return (
     <span
